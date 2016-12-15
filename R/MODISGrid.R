@@ -26,7 +26,7 @@ function(Dir = ".", DirName = "MODIS_GRID", SubDir = TRUE, NoDataValues)
   if(!all(prod.set %in% names(NoDataValues))) stop("Mismatch between NoDataValues and data products found in files.")
 
   ## Check that NoDataValues value is specified for every data band found in file.list.
-  band.set <- unique(as.vector(sapply(
+  band.set <- unique(unlist(sapply(
       lapply(file.path(Dir, file.list), function(x) read.csv(x, header = FALSE, as.is = TRUE)[ ,6]),
       function(x) unique(substr(x, (gregexpr(".", x, fixed = TRUE)[[1]][5] + 1), nchar(x)))
   )))
